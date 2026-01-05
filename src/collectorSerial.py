@@ -5,10 +5,19 @@ import os
 import keyboard
 
 # --- Configuration ---
-COMPORT = 'COM8'  # Update to your ESP32's port
+
+# ---------------------------------------------------------------- //
+# // // REPLACE WITH YOUR ESP32's port
+COMPORT = 'COM9'  # Update to your ESP32's port
+#---------------------------------------------------------------- //
+
+#---------------------------------------------------------------- //
+RECORD_SECONDS = 60 # Change this for longer dataset 
+#---------------------------------------------------------------- //
+
 BAUD = 921600
 SAMPLE_RATE = 16000
-RECORD_SECONDS = 60
+
 TOTAL_BYTES = SAMPLE_RATE * RECORD_SECONDS * 2  # 16-bit PCM
 
 # Create base data directory
@@ -28,7 +37,7 @@ def get_next_filename(label):
 
 def record_sample(ser, label):
     filename = get_next_filename(label)
-    print(f"\n[READY] Press SPACE to record 3s for label: '{label}'")
+    print(f"\n[READY] Press SPACE to record {RECORD_SECONDS} for label: '{label}'")
     keyboard.wait('space')
     
     # Flush any old data in the buffer
