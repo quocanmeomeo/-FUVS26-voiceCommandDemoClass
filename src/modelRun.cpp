@@ -4,7 +4,7 @@
 
 // // ---------------------------------------------------------------- //
 // // REPLACE WITH YOUR LIBRARY
-// #include <quocanmeomeo-project-1_inferencing.h> 
+// #include <quocanmeomeo-project-1_inferencing.h>
 // // ---------------------------------------------------------------- //
 
 // // --- Pin Definitions ---
@@ -33,10 +33,10 @@
 // Adafruit_NeoPixel pixels(NEOPIXEL_COUNT, NEOPIXEL_PIN, NEO_GRB + NEO_KHZ800);
 
 // // Ring Buffer settings
-// #define N_SAMPLES_TO_ALLOC (EI_CLASSIFIER_RAW_SAMPLE_COUNT * 2) 
-// int16_t *inference_buffer; 
+// #define N_SAMPLES_TO_ALLOC (EI_CLASSIFIER_RAW_SAMPLE_COUNT * 2)
+// int16_t *inference_buffer;
 // volatile uint32_t record_idx = 0;
-// bool debug_nn = false; 
+// bool debug_nn = false;
 
 // // --- State Machine Enums ---
 // enum DetectionState {
@@ -73,7 +73,7 @@
 //     COL_BLUE = pixels.Color(0, 0, 255);
 //     COL_WHITE = pixels.Color(255, 255, 255); // Noise/Idle
 //     COL_BLACK = pixels.Color(0, 0, 0);
-    
+
 //     setLedColor(COL_WHITE); // Start in Noise/Idle state
 
 //     // 2. Allocate Ring Buffer
@@ -102,14 +102,14 @@
 
 //     // Continuous inference handles the window sliding automatically
 //     EI_IMPULSE_ERROR r = run_classifier_continuous(&signal, &result, debug_nn);
-    
+
 //     if (r != EI_IMPULSE_OK) {
 //         ei_printf("ERR: Classifier failed (%d)\n", r);
 //         return;
 //     }
 
 //     // --- Get Best Prediction ---
-//     // float max_score = 0.0;
+//     float max_score = 0.0;
 //     int max_index = -1;
 
 //     for (size_t ix = 0; ix < EI_CLASSIFIER_LABEL_COUNT; ix++) {
@@ -121,17 +121,16 @@
 //     const char* current_label = result.classification[max_index].label;
 
 //     // Print status (helps debugging)
-//     ei_printf("[%s] Detect: %s (%.2f) | State: %d\n", 
-//               (currentState == STATE_LOCKED ? "LOCKED" : (currentState == STATE_VERIFYING ? "VERIFY" : "IDLE")), 
+//     ei_printf("[%s] Detect: %s (%.2f) | State: %d\n",
+//               (currentState == STATE_LOCKED ? "LOCKED" : (currentState == STATE_VERIFYING ? "VERIFY" : "IDLE")),
 //               current_label, max_score, currentState);
-
 
 //     // ---------------------------------------------------------------- //
 //     // STATE MACHINE LOGIC
 //     // ---------------------------------------------------------------- //
-    
+
 //     switch (currentState) {
-        
+
 //         // --- CASE 1: IDLE (Waiting for trigger) ---
 //         case STATE_IDLE:
 //             // Ensure LED is White (Noise) while waiting
@@ -140,16 +139,16 @@
 //             // Check trigger condition: > 90% AND ("on" OR "off")
 //             if (max_score > TRIGGER_CONFIDENCE) {
 //                 if (strcmp(current_label, "on") == 0 || strcmp(current_label, "off") == 0) {
-                    
+
 //                     // Start Verification
 //                     strcpy(targetLabel, current_label); // Remember what we are verifying
 //                     currentState = STATE_VERIFYING;
-                    
+
 //                     // Reset counters
 //                     verifyCounter = 0;
 //                     matchCounter = 0;
 //                     matchConfidenceSum = 0;
-                    
+
 //                     Serial.print(">>> Triggered! Verifying: ");
 //                     Serial.println(targetLabel);
 //                 }
@@ -168,7 +167,7 @@
 
 //             // Check if we have finished inspecting 10 samples
 //             if (verifyCounter >= VERIFY_SAMPLES) {
-                
+
 //                 float avgConf = 0;
 //                 if (matchCounter > 0) avgConf = matchConfidenceSum / matchCounter;
 
@@ -176,11 +175,11 @@
 
 //                 // Validation Logic: Matches > 5 AND Avg Conf > 0.85
 //                 if (matchCounter >= VERIFY_MIN_COUNT && avgConf > VERIFY_AVG_CONF && matchCounter <= VERIFY_MAX_COUNT) {
-                    
+
 //                     // SUCCESS! Lock the state.
 //                     currentState = STATE_LOCKED;
 //                     lockStartTime = millis();
-                    
+
 //                     if (strcmp(targetLabel, "on") == 0) {
 //                         setLedColor(COL_GREEN);
 //                     } else {
@@ -201,7 +200,7 @@
 //         case STATE_LOCKED:
 //             // We continue running the classifier loop to keep the buffer clean,
 //             // but we IGNORE the result and DO NOT change the LED.
-            
+
 //             if (millis() - lockStartTime > LOCK_TIME_MS) {
 //                 Serial.println(">>> Lock Timer Expired. Resetting.");
 //                 currentState = STATE_IDLE;
@@ -212,7 +211,7 @@
 // }
 
 // // ---------------------------------------------------------------- //
-// // I2S Setup 
+// // I2S Setup
 // // ---------------------------------------------------------------- //
 // void setupI2S() {
 //     i2s_config_t i2s_config = {
@@ -244,11 +243,11 @@
 // // ---------------------------------------------------------------- //
 // void capture_samples_task(void* arg) {
 //     size_t bytes_read;
-//     int32_t raw_buffer[128]; 
-    
+//     int32_t raw_buffer[128];
+
 //     while (true) {
 //         i2s_read(I2S_PORT, &raw_buffer, sizeof(raw_buffer), &bytes_read, portMAX_DELAY);
-//         int samples_read = bytes_read / 4; 
+//         int samples_read = bytes_read / 4;
 
 //         for (int i = 0; i < samples_read; i++) {
 //             int16_t sample = (int16_t)(raw_buffer[i] >> 14);
@@ -266,7 +265,7 @@
 // // ---------------------------------------------------------------- //
 // int microphone_audio_signal_get_data(size_t offset, size_t length, float *out_ptr) {
 //     int start_index = record_idx - EI_CLASSIFIER_RAW_SAMPLE_COUNT + offset;
-    
+
 //     if (start_index < 0) {
 //         start_index += N_SAMPLES_TO_ALLOC;
 //     }
