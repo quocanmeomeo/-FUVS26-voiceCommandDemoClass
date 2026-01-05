@@ -1,7 +1,7 @@
 ***
 # VoiceLink tutorial
 
-This project utilizes the ESP32S3 as an AI processor for voice command recognition. The following tutorial will guide you through the step-by-step implementation of the system.
+This project utilizes the ESP32S3 as an AI processor for voice command recognition. The following tutorial will guide you through the step-by-step implementation of the system. The project is used for the Fulbright University Vietnam Demo class in the spring of 2026.
 
 ## Part 1: Data Collection
 
@@ -196,5 +196,6 @@ Now we replace the data collection script with the actual AI logic.
 1.  Connect your ESP32.
 2.  Click **Upload** in PlatformIO.
 3.  Open the Serial Monitor and start speaking your keywords!
+
 
 
